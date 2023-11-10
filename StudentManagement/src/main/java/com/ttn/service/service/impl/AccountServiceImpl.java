@@ -50,4 +50,34 @@ public class AccountServiceImpl implements AccountService {
     public boolean addOrUpdateAccount(Account account) {
         return this.accountRepo.addOrUpdateAccount(account);
     }
+
+    @Override
+    public Account getAccountById(int id) {
+        return this.accountRepo.getAccountById(id);
+    }
+
+    @Override
+    public boolean deleteAccount(int id) {
+        return this.accountRepo.deleteAccount(id);
+    }
+
+    @Override
+    public List<Account> getAccountsAvailable() {
+        return this.accountRepo.getAccountsAvailable();
+    }
+
+    @Override
+    public Account getAccountByUsername(String username) {
+        return this.accountRepo.getAccountByUsername(username);
+    }
+
+    @Override
+    public boolean isExistsByUsername(String username) {
+        return this.accountRepo.isExistsByUsername(username);
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.accountRepo.authUser(username, password);
+    }
 }

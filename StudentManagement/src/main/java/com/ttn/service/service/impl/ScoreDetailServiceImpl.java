@@ -5,7 +5,7 @@
 package com.ttn.service.service.impl;
 
 import com.ttn.pojo.Scoredetail;
-import com.ttn.service.ClassService;
+import com.ttn.repository.ScoreDetailRepository;
 import com.ttn.service.ScoreDetailService;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScoreDetailServiceImpl implements ScoreDetailService{
     @Autowired
-    private ScoreDetailService scoreDetail;
+    private ScoreDetailRepository scoreDetail;
 
     @Override
     public List<Scoredetail> getScoreDetails(Map<String, String> param) {

@@ -6,7 +6,10 @@ package com.ttn.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.ttn.formatter.ClassFormatter;
 import com.ttn.formatter.LectureFormatter;
+import com.ttn.formatter.StudentFormatter;
+import com.ttn.formatter.SubjectFormatter;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -52,6 +55,9 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new LectureFormatter());
+        registry.addFormatter(new SubjectFormatter());
+        registry.addFormatter(new StudentFormatter());
+        registry.addFormatter(new ClassFormatter());
     }
 
     @Override

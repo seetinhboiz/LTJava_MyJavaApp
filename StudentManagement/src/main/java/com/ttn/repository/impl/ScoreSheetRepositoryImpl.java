@@ -32,4 +32,13 @@ public class ScoreSheetRepositoryImpl implements ScoreSheetRepository{
         
         return query.getResultList();
     }
+
+    @Override
+    public List<Scoresheet> getScoreSheetByClassId(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Scoresheet WHERE idClass.id = :idClass");
+        query.setParameter("idClass", id);
+        
+        return query.getResultList();
+    }   
 }

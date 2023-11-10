@@ -4,6 +4,7 @@
  */
 package com.ttn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -36,6 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Class.findByQuantityStudent", query = "SELECT c FROM Class c WHERE c.quantityStudent = :quantityStudent")})
 public class Class implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
+    @JsonIgnore
+    private Collection<Scoresheet> scoresheetCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,8 +51,6 @@ public class Class implements Serializable {
     @NotNull
     @Column(name = "quantityStudent")
     private int quantityStudent;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClass")
-    private Collection<Scoresheet> scoresheetCollection;
     @JoinColumn(name = "idLecture", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Lecture idLecture;
@@ -81,15 +84,6 @@ public class Class implements Serializable {
 
     public void setQuantityStudent(int quantityStudent) {
         this.quantityStudent = quantityStudent;
-    }
-
-    @XmlTransient
-    public Collection<Scoresheet> getScoresheetCollection() {
-        return scoresheetCollection;
-    }
-
-    public void setScoresheetCollection(Collection<Scoresheet> scoresheetCollection) {
-        this.scoresheetCollection = scoresheetCollection;
     }
 
     public Lecture getIdLecture() {
@@ -132,5 +126,14 @@ public class Class implements Serializable {
     public String toString() {
         return "com.ttn.pojo.Class[ id=" + id + " ]";
     }
-    
+
+    @XmlTransient
+    public Collection<Scoresheet> getScoresheetCollection() {
+        return scoresheetCollection;
+    }
+
+    public void setScoresheetCollection(Collection<Scoresheet> scoresheetCollection) {
+        this.scoresheetCollection = scoresheetCollection;
+    }
+
 }

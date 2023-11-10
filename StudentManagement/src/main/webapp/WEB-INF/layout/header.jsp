@@ -15,21 +15,17 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/student" />">Sinh viên</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/subject" />">Môn học</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/class" />"/>Lớp</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/account" />">User</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Lớp</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sinh viên</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Điểm</a>
-                </li>
-
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name != null}">
                         <li class="nav-item">
@@ -42,6 +38,9 @@
                     <c:otherwise>
                         <li class="nav-item">
                             <a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<c:url value="/register" />">Đăng ký</a>
                         </li>
                     </c:otherwise>
                 </c:choose>

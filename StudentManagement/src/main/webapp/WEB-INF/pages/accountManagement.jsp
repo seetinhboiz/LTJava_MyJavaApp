@@ -11,13 +11,16 @@
 <h1 class="text-center text-info mt-2">QUẢN LÝ TÀI KHOẢN</h1>
 <c:url value="/account/accountManagement" var="action"/>
 <form:form modelAttribute="account" method="post" action="${action}">
+    <form:hidden path="id" />
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" id="username" placeholder="Tài khoản" name="username" path="username"/>
         <label for="username">Tài khoản</label>
+        <form:errors path="username" element="div" cssClass="text-danger"/>
     </div>
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" id="password" placeholder="Mật khẩu" name="password" path="password"/>
         <label for="password">Mật khẩu</label>
+        <form:errors path="password" element="div" cssClass="text-danger"/>
     </div>
     <div class="form-floating">
         <form:select class="form-select" id="role" name="role" path="role">

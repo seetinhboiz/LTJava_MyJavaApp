@@ -17,8 +17,8 @@
             <tr>
                 <th>Mã tài khoản</th>
                 <th>Username</th>
-                <th>Password</th>
                 <th>Vai trò</th>
+                <th>Tình trạng tài khoản</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,10 +27,9 @@
                 <tr>
                     <td>${account.id}</td>
                     <td>${account.username}</td>
-                    <td>${account.password}</td>
                     <c:choose>
                         <c:when test="${account.role == 0}">
-                            <td>Giáo vụ</td>
+                            <td class="text-info">Giáo vụ</td>
                         </c:when>
                         <c:when test="${account.role == 1}">
                             <td>Giảng viên</td>
@@ -39,12 +38,24 @@
                             <td>Sinh viên</td>  
                         </c:otherwise>
                     </c:choose>
+                    <c:choose>
+                        <c:when test="${account.available == 0}">
+                            <td>Chưa được sử dụng</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>Đang được sử dụng</td>  
+                        </c:otherwise>
+                    </c:choose>
                     <td>
-                        <a href="#" class="btn btn-success">Cập nhật</a>
-                        <button class="btn btn-danger">Xóa</button>
+                        <c:url value="/account/accountManagement/${account.id}" var="update"/>
+                        <c:url value="/api/account/accountManagement/${account.id}" var="api"/>
+                        <a href="${update}" class="btn btn-success">Cập nhật</a>
+                        <button class="btn btn-danger" onclick="deleteLecture('${api}')">Xóa</button>
                     </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
 </section>
+
+<script src="<c:url value="/js/main.js" />"></script>

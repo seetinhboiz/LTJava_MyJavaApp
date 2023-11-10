@@ -5,6 +5,7 @@
 package com.ttn.controller;
 
 import com.ttn.pojo.Lecture;
+import com.ttn.service.AccountService;
 import com.ttn.service.LectureService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,10 +27,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LectureController {
     @Autowired
     private LectureService lectureService;
+    
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("/lectures")
     public String list(Model model) {
         model.addAttribute("lecture", new Lecture());
+        model.addAttribute("account", this.accountService.getAccountsAvailable());
 
         return "lectures";
     }
@@ -38,6 +43,8 @@ public class LectureController {
     public String update(Model model, @PathVariable(value = "id") int id) {
         Lecture l = this.lectureService.getLectureById(id);
         model.addAttribute("lecture", l);
+        model.addAttribute("account", this.accountService.getAccountsAvailable());
+        model.addAttribute("currentAccount", this.accountService.getAccountById(l.getIdAccount()));
 
         return "lectures";
     }

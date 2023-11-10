@@ -41,23 +41,33 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     @Override
     public List<Subject> getSubject(Map<String, String> param) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query query = session.createQuery("FROM Subject");
-        
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Subject> q = b.createQuery(Subject.class);
+        Root root = q.from(Subject.class);
+        q.select(root);
 
-        if (param != null && param.containsKey("kw")) {
+        if (param != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
             String kw = param.get("kw");
             if (kw != null && !kw.isEmpty()) {
-                query = session.createQuery("FROM Subject WHERE name LIKE :n");
-                query.setParameter("n", kw);
+                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
             }
+
+            Predicate[] predicateArray = new Predicate[predicates.size()];
+
+            predicates.toArray(predicateArray);
+
+            q.where(predicateArray);
         }
+
+        Query query = session.createQuery(q);
 
         return query.getResultList();
     }
 
     @Override
-    public boolean addOrUpdateSubject(Subject s
-    ) {
+    public boolean addOrUpdateSubject(Subject s) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
             if (s.getId() == null) {
@@ -81,8 +91,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     }
 
     @Override
-    public boolean deleteSubject(int id
-    ) {
+    public boolean deleteSubject(int id) {
         Session session = this.factory.getObject().getCurrentSession();
         Subject subject = this.getSubjectById(id);
 

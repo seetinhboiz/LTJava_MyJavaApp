@@ -4,6 +4,7 @@
  */
 package com.ttn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -22,10 +23,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -71,6 +75,7 @@ public class Student implements Serializable {
     @NotNull
     @Column(name = "birth")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     @Size(max = 250)
     @Column(name = "avata")
@@ -82,10 +87,14 @@ public class Student implements Serializable {
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStudent")
+    @JsonIgnore
     private Collection<Scoresheet> scoresheetCollection;
     @JoinColumn(name = "idAccount", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Account idAccount;
+    
+    @Transient
+    private MultipartFile file;
 
     public Student() {
     }
@@ -199,6 +208,20 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return "com.ttn.pojo.Student[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

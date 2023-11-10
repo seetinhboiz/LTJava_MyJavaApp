@@ -4,8 +4,11 @@
  */
 package com.ttn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Scoresheet.findAll", query = "SELECT s FROM Scoresheet s"),
     @NamedQuery(name = "Scoresheet.findById", query = "SELECT s FROM Scoresheet s WHERE s.id = :id")})
 public class Scoresheet implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idScoresheet")
+    private Collection<Scoredetail> scoredetailCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -98,5 +106,13 @@ public class Scoresheet implements Serializable {
     public String toString() {
         return "com.ttn.pojo.Scoresheet[ id=" + id + " ]";
     }
-    
+
+    @XmlTransient
+    public Collection<Scoredetail> getScoredetailCollection() {
+        return scoredetailCollection;
+    }
+
+    public void setScoredetailCollection(Collection<Scoredetail> scoredetailCollection) {
+        this.scoredetailCollection = scoredetailCollection;
+    }
 }

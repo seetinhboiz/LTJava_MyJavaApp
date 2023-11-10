@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,9 +43,12 @@ public class Subject implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
     @NotNull (message = "{subject.credit}")
     @Column(name = "credit")
-    private Integer credit;
+    private int credit;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 255, message = "{subject.name}")
     @Column(name = "name")
     private String name;
@@ -61,6 +63,12 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
+    public Subject(Integer id, int credit, String name) {
+        this.id = id;
+        this.credit = credit;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -69,11 +77,11 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
-    public Integer getCredit() {
+    public int getCredit() {
         return credit;
     }
 
-    public void setCredit(Integer credit) {
+    public void setCredit(int credit) {
         this.credit = credit;
     }
 

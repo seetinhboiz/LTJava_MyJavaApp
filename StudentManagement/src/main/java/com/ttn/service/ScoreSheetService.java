@@ -14,4 +14,5 @@ import java.util.Map;
  */
 public interface ScoreSheetService {
     List<Scoresheet> getScoreSheets(Map<String, String> param);
+    List<Scoresheet> getScoreSheetByClassId(int id);
 }

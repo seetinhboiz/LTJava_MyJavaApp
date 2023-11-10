@@ -6,6 +6,7 @@ package com.ttn.controller;
 
 import com.ttn.pojo.Subject;
 import com.ttn.service.SubjectService;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -22,13 +24,12 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class SubjectController {
-
     @Autowired
     private SubjectService subjectService;
 
     @GetMapping("/subject")
-    public String list(Model model) {
-        model.addAttribute("subject", this.subjectService.getSubjects(null));
+    public String list(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("subject", this.subjectService.getSubjects(params));
 
         return "subject";
     }
@@ -39,7 +40,7 @@ public class SubjectController {
 
         return "subjectManagement";
     }
-
+    
     @GetMapping("/subject/subjectManagement/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
         Subject subject = this.subjectService.getSubjectById(id);
@@ -52,7 +53,7 @@ public class SubjectController {
     public String add(@ModelAttribute(value = "subject") @Valid Subject subject, BindingResult result) {
         if (!result.hasErrors()) {
             if (this.subjectService.addOrUpdateSubject(subject) == true) {
-                return "redirect:/";
+                return "redirect:/subject";
             }   
         }
 

@@ -37,6 +37,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/pages/login.jsp" />
     </definition>
+    <definition name="register" extends="baseLayout">
+        <put-attribute name="title" value="Đăng ký" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/register.jsp" />
+    </definition>
     <definition name="account" extends="baseLayout">
         <put-attribute name="title" value="Tài khoản" />
         <put-attribute name="content"
@@ -46,5 +51,30 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Quản lý tài khoản" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/accountManagement.jsp" />
+    </definition>
+    <definition name="student" extends="baseLayout">
+        <put-attribute name="title" value="Sinh viên" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/student.jsp" />
+    </definition>
+    <definition name="studentManagement" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý sinh viên" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/studentManagement.jsp" />
+    </definition>
+    <definition name="class" extends="baseLayout">
+        <put-attribute name="title" value="Lớp học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/class.jsp" />
+    </definition>
+    <definition name="classManagement" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý lớp học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/classManagement.jsp" />
+    </definition>
+    <definition name="classDetail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết lớp học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/classDetail.jsp" />
     </definition>
 </tiles-definitions>

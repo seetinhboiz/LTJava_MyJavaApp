@@ -17,5 +17,15 @@ public interface AccountRepository {
     
     Account getAccountByUsername(String username);
     
+    Account getAccountById (int id);
+    
     boolean addOrUpdateAccount(Account account);
+    
+    boolean deleteAccount(int id);
+    
+    List<Account> getAccountsAvailable();
+    
+    boolean isExistsByUsername(String username);
+    
+    boolean authUser(String username, String password);
 }

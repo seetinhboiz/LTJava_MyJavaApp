@@ -9,6 +9,7 @@ import com.ttn.repository.ClassRepository;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -32,5 +33,40 @@ public class ClassRepositoryImpl implements ClassRepository{
         
         return query.getResultList();
     }
-    
+
+    @Override
+    public boolean addOrUpdateClass(Class _class) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            if (_class.getId() == null) {
+                session.save(_class);
+            } else {
+                session.update(_class);
+            }
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Class getClassById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return session.get(Class.class, id);
+    }
+
+    @Override
+    public boolean deleteClass(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Class _class = this.getClassById(id);
+        
+        try {
+            session.delete(_class);
+            return true;
+        }catch(HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

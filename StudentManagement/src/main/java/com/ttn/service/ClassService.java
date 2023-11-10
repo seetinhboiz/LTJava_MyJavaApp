@@ -13,4 +13,7 @@ import java.util.Map;
  */
 public interface ClassService {
     List<com.ttn.pojo.Class> getClass(Map<String, String> param);
+    boolean addOrUpdateClass(com.ttn.pojo.Class _class);
+    com.ttn.pojo.Class getClassById(int id);
+    boolean deleteClass(int id);
 }

@@ -16,12 +16,12 @@ import org.springframework.format.Formatter;
 public class LectureFormatter implements Formatter<Lecture>{
 
     @Override
-    public String print(Lecture object, Locale locale) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String print(Lecture idLecture, Locale locale) {
+        return String.valueOf(idLecture.getId());
     }
 
     @Override
-    public Lecture parse(String text, Locale locale) throws ParseException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Lecture parse(String idLecture, Locale locale) throws ParseException {
+        return new Lecture(Integer.parseInt(idLecture));
     }
 }

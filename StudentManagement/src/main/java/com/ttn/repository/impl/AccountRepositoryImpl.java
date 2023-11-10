@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 public class AccountRepositoryImpl implements AccountRepository {
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -55,6 +56,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                 account.setPassword(passwordEncoder.encode(account.getPassword()));
                 session.save(account);
             } else {
+                account.setPassword(passwordEncoder.encode(account.getPassword()));
                 session.update(account);
             }
 
@@ -63,5 +65,50 @@ public class AccountRepositoryImpl implements AccountRepository {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Account getAccountById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return session.get(Account.class, id);
+    }
+
+    @Override
+    public boolean deleteAccount(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Account account = this.getAccountById(id);
+        
+        try {
+            session.delete(account);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public List<Account> getAccountsAvailable() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Account WHERE available = 0");
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public boolean isExistsByUsername(String username) {
+        Account account = this.getAccountByUsername(username);
+        
+        if (account.getId() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        Account account = this.getAccountByUsername(username);
+        
+        return this.passwordEncoder.matches(password, account.getPassword());
     }
 }

@@ -11,56 +11,61 @@
 <h1 class="text-center text-info mt-1">QUẢN LÝ GIẢNG VIÊN</h1>
 <c:url value="/lectures" var="action"/>
 <form:form modelAttribute="lecture" method="post" action="${action}" enctype="multipart/form-data">
-    <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
-    <form:hidden path="avata" />
-    
+    <form:hidden path="avata" />    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="name" id="name" placeholder="Tên giảng viên" name="name" />
         <label for="name">Tên giảng viên</label>
         <form:errors path="name" element="div" cssClass="text-danger"/>
     </div>
-    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="number" class="form-control" path="phone" id="phone" placeholder="Số điện thoại" name="phone" />
         <label for="phone">Số điện thoại</label>
         <form:errors path="phone" element="div" cssClass="text-danger"/>
     </div>
-    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="address" id="address" placeholder="Địa chỉ" name="address" />
         <label for="address">Địa chỉ</label>
         <form:errors path="address" element="div" cssClass="text-danger"/>
     </div>
-    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="degree" id="degree" placeholder="Bằng cấp" name="degree" />
         <label for="degree">Bằng cấp</label>
         <form:errors path="degree" element="div" cssClass="text-danger"/>
     </div>
-    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="date" class="form-control" path="birth" id="birth" placeholder="Ngày sinh" name="birth" />
         <label for="birth">Ngày sinh</label>
         <form:errors path="birth" element="div" cssClass="text-danger"/>
     </div>
-    
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="email" class="form-control" path="email" id="email" placeholder="Email" name="email" />
         <label for="email">Email</label>
         <form:errors path="email" element="div" cssClass="text-danger"/>
     </div>
-    
-    <div class="form-floating mb-3 mt-3">
-        <form:input type="text" class="form-control" path="idAccount" id="idAccount" placeholder="Gán tài khoản" name="idAccount" />
-        <label for="idAccount">Gán tài khoản</label>
-        <form:errors path="idAccount" element="div" cssClass="text-danger"/>
+
+    <div class="form-floating">
+        <form:select class="form-select" id="idAccount" name="idAccount" path="idAccount">
+            <c:if test="${lecture.id != null}">
+                <option value="${currentAccount.id}" selected >id: ${currentAccount.id} - username: ${currentAccount.username} - role: ${currentAccount.role}</option>
+            </c:if>
+            <c:forEach items="${account}" var="account">
+                <option value="${account.id}">id: ${account.id} - username: ${account.username} - role: ${account.role}</option>
+            </c:forEach>
+        </form:select>
+        <label for="idAccount" class="form-label">Gán tài khoản:</label>
     </div>
 
     <div class="form-floating mb-3 mt-3">
         <form:input type="file" class="form-control" path="file" id="file" placeholder="Ảnh giảng viên" name="file" />
         <label for="file">Ảnh giảng viên</label>
-        <form:errors path="email" element="div" cssClass="text-danger"/>
+        <form:errors path="avata" element="div" cssClass="text-danger"/>
     </div>
 
     <div class="form-floating mb-3 mt-3">

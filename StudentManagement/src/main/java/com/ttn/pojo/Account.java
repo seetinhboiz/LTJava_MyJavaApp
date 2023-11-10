@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByRole", query = "SELECT a FROM Account a WHERE a.role = :role")})
 public class Account implements Serializable {
 
+    @Column(name = "available")
+    private Integer available;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,19 +48,19 @@ public class Account implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 250, message = "{account.password}")
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "username")
+    @Size(min = 1, max = 250, message = "{account.username}")
+    @Column(name = "username", unique = true)
     private String username;
     @Basic(optional = false)
     @NotNull
     @Column(name = "role")
     private int role;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAccount")
+    @OneToMany(mappedBy = "idAccount")
     @JsonIgnore
     private Collection<Student> studentCollection;
 
@@ -140,6 +142,14 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "com.ttn.pojo.Account[ id=" + id + " ]";
+    }
+
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
     
 }

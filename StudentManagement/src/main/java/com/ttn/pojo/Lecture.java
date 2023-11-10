@@ -77,12 +77,13 @@ public class Lecture implements Serializable {
     @Column(name = "degree")
     private String degree;
     @Basic(optional = false)
-    @NotNull (message = "{lecture.birth}")
+    @NotNull(message = "{lecture.birth}")
     @Column(name = "birth")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     @Size(max = 250)
+    @NotNull(message = "{lecture.avata}")
     @Column(name = "avata")
     private String avata;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -101,12 +102,12 @@ public class Lecture implements Serializable {
     
     @Transient
     private MultipartFile file;
-
+    
     public Lecture() {
     }
 
     public Lecture(Integer id) {
-        this.id = id;
+        this.id = id;   
     }
 
     public Lecture(Integer id, String name, String phone, String address, String degree, Date birth, String email, int idAccount) {
@@ -239,5 +240,5 @@ public class Lecture implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
 }

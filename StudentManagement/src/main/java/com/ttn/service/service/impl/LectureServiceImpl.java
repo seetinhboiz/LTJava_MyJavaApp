@@ -6,7 +6,9 @@ package com.ttn.service.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.ttn.pojo.Account;
 import com.ttn.pojo.Lecture;
+import com.ttn.repository.AccountRepository;
 import com.ttn.repository.LectureRepository;
 import com.ttn.service.LectureService;
 import java.io.IOException;
@@ -26,6 +28,9 @@ public class LectureServiceImpl implements LectureService {
 
     @Autowired
     private LectureRepository lectureRepository;
+    
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -42,6 +47,8 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public boolean addOrUpdateLecture(Lecture lctr) {
+        Account account = this.accountRepository.getAccountById(lctr.getIdAccount());
+        account.setAvailable(1);
         if (!lctr.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(lctr.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -50,7 +57,9 @@ public class LectureServiceImpl implements LectureService {
                 Logger.getLogger(LectureServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return this.lectureRepository.addOrUpdateLecture(lctr);
+        this.lectureRepository.addOrUpdateLecture(lctr);
+        this.accountRepository.addOrUpdateAccount(account);
+        return true;
     }
 
     @Override

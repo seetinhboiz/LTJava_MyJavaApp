@@ -53,9 +53,11 @@ public class Class implements Serializable {
     private int quantityStudent;
     @JoinColumn(name = "idLecture", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Lecture idLecture;
     @JoinColumn(name = "idSubject", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Subject idSubject;
 
     public Class() {

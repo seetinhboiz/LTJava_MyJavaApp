@@ -25,18 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Admin
  */
 @RestController 
-@RequestMapping("/api")
+@RequestMapping("/api/lectures")
 public class ApiLecctureController {
     @Autowired
     private LectureService lectureService;
 
-    @DeleteMapping("/lectures/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLecture(@PathVariable(value = "id") int id) {
         this.lectureService.deleteLecture(id);
     }
     
-    @GetMapping("/lectures")
+    @GetMapping("")
     @CrossOrigin
     public ResponseEntity<List<Lecture>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.lectureService.getLectures(params), HttpStatus.OK);

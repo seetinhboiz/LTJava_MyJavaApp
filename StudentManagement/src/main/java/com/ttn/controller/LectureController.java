@@ -8,7 +8,6 @@ import com.ttn.pojo.Lecture;
 import com.ttn.service.AccountService;
 import com.ttn.service.LectureService;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

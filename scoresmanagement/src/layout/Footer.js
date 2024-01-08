@@ -1,7 +1,15 @@
-const Footer = () => {
-    return (
-        <h1>Footer</h1>
-    )
-}
+import { Col, Container, Row } from "react-bootstrap";
 
-export default Footer;
+const FooterComponent = () => {
+  return (
+    <Container className="footer">
+      <Row>
+        <Col xs>First, but unordered</Col>
+        <Col xs={{ order: 12 }}>Second, but last</Col>
+        <Col xs={{ order: 1 }}>Third, but second</Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default FooterComponent;

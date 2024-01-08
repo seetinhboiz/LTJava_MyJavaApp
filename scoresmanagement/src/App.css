@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+.footer {
+  margin-top: 10vh;
+  padding: 10vh 0;
+  background-color: #61dafb !important;
+}
+
+.avata {
+  object-fit: contain;
+  max-height: 300px;
+}
+
+.buttonDetail {
+  display: block;
+  margin: 0 auto;
+}
+
+.lecture {
+  position: relative;
+}
+
+.modalDetail {
+  position: fixed !important;
+  z-index: 2;
+  background: rgba(0,0,0,0.5);
+  padding: 3.2rem;
+}
+
+.modal-header {
+  justify-content: center;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.textInfo {
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.modal-footer {
+  justify-content: center;
+} 

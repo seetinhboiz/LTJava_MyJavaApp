@@ -35,6 +35,10 @@ public class AccountRepositoryImpl implements AccountRepository {
     public List<Account> getAccounts(Map<String, String> param) {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("FROM Account");
+        if (!param.isEmpty()) {
+            query = session.createQuery("FROM Account WHERE username LIKE :userName");
+            query.setParameter("userName", param.get("kw"));
+        }
 
         return query.getResultList();
     }

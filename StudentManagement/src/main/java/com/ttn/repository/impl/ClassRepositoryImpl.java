@@ -6,9 +6,14 @@ package com.ttn.repository.impl;
 
 import com.ttn.pojo.Class;
 import com.ttn.repository.ClassRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class ClassRepositoryImpl implements ClassRepository{
+public class ClassRepositoryImpl implements ClassRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -30,6 +36,10 @@ public class ClassRepositoryImpl implements ClassRepository{
     public List<Class> getClass(Map<String, String> param) {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("FROM Class");
+        if (!param.isEmpty()) {
+            query = session.createQuery("FROM Class WHERE idSubject.name LIKE :subjectName");
+            query.setParameter("subjectName", "%" + param.get("kw") + "%");
+        }
         
         return query.getResultList();
     }
@@ -60,11 +70,11 @@ public class ClassRepositoryImpl implements ClassRepository{
     public boolean deleteClass(int id) {
         Session session = this.factory.getObject().getCurrentSession();
         Class _class = this.getClassById(id);
-        
+
         try {
             session.delete(_class);
             return true;
-        }catch(HibernateException ex) {
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
